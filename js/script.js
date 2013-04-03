@@ -6,6 +6,7 @@
 function($)
 {
     $(".calendar").popover();
+    $("#create_news").collapse()
 }
 )(jQuery);
 

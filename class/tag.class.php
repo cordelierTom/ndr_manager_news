@@ -44,6 +44,8 @@ class Tag {
      */
     static function generateMenu()
     {
+        sort(Tag::$tags_list, SORT_STRING);
+        
         $title_menu = "Filtre par mot-clés";
 
         echo '<div class="span3">';
@@ -53,7 +55,7 @@ class Tag {
                      /*Link tag*/
                      foreach(Tag::$tags_list as $tag_id => $libelle)
                      {
-                         echo '<li><a href="#">'.$libelle.'</a></li>';
+                         echo '<li><a href="#filter#">'.$libelle.'</a></li>';
                      }
                 echo '</ul>';
             echo '</div><!--/.well -->';

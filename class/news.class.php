@@ -110,22 +110,48 @@ class News {
         return $this->dateus2fr($this->datePublication);
     }
 
+    /**
+     * Genere le formulaire
+     */
+
+     static function generateFormulaire()
+     {
+         echo '<div class="well">';
+         echo '<h5> <a href="#" data-toggle="collapse" data-target="#create_news"><i class="icon-file"></i> Nouvelle news</a> </h5>';
+         echo '<div id="create_news" class="collapse in">';
+         echo '<div><input type="text" placeholder="Titre"></div>';
+         echo '<div><textarea rows="5" style="width: 1005px; height: 139px;"></textarea></div>';
+         echo '<div>Mot-clés : <input type="text" placeholder="motclé1, motcle2"></div>';
+         echo '<div>Date de supprésion :   <input type="text" placeholder="DD/MM/YYYY"></div>';
+         echo '<div>Date de publication :  <input type="text" placeholder="DD/MM/YYYY"></div>';
+         echo '<div><button class="btn btn-success" type="button">Valider</button></div>';
+         echo '</div>';
+         echo '</div>';
+     }
 
     /*
-     *
+     * Genere toute les news
      * 
      */
-    static function viewAll()
+    static function viewAll($id = NULL)
     {
-            echo '<div class="span9">';
+        if(isset($id))
+        {
+            if(Views::exist($id))
+                Views::$list_views[$id]->view;
+        }
+        else
+        {
             foreach (News::$news_list as $news)
             {
                 $news->view();
             }
-           echo '</div>';
-       
+        }
     }
 
+    /*
+     * Genere une news
+     */
     public function view()
     {
 
@@ -135,7 +161,7 @@ class News {
 
         foreach($this->tags as $key => $tag)
         {
-            $string_tag = $string_tag.'<a href="">'.$tag->getLibelle().'</a>';
+            $string_tag = $string_tag.'<a href="#filter#">'.$tag->getLibelle().'</a>';
 
             if($tag != end($this->tags))
             {
@@ -151,14 +177,13 @@ class News {
         $string_date = $string_date.'<small>Date de publication: '.$this->getDateCreation().'</small>';
 
         echo '<div class="well">';
+        echo '<div class="text-right"><a href="#delete#"><i class="icon-remove"></i></a></div>';
         echo '<h2>';
-        echo '<a href=""><i class="icon-pencil"></i></a>';
         echo $this->getTitle();
         echo '</h2>';
         echo '<p>';
         echo $this->getDescription();
-
-        echo '<div class="text-right"><a class="calendar" data-content="'.$string_date.'" data-html="true" data-placement="left" href="#" data-original-title="Informations"><i class="icon-calendar"></i></a></div>';
+        echo '<div class="text-right"><a class="calendar" data-content="'.$string_date.'" data-html="true" data-placement="left" href="#calendar#" data-original-title="Informations"><i class="icon-calendar"></i></a></div>';
         echo '<div class="text-left"><small>Mot-clés : '.$string_tag.'</small></div>';
         echo '</p>';
         echo '<hr></hr>';
@@ -179,8 +204,6 @@ class News {
         return NULL;
     }
 
-
-
     /*
      * 
      */
@@ -188,5 +211,4 @@ class News {
     {
        
     }
-
 }
