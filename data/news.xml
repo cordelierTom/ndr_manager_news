@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Edited by XMLSpy� -->
+<news>
+    <new>
+        <id>0</id>
+        <title>Absence de machin</title>
+        <dateCreation>2012-01-24</dateCreation>
+        <datePublication>2012-01-24</datePublication>
+        <dateSuppression>2012-01-24</dateSuppression>
+        <description>Exemple</description>
+        <tags>
+            <tag>Tag1</tag>
+            <tag>Tag2</tag>
+        </tags>
+    </new>
+
+     <new>
+        <id>1</id>
+        <title>Modification emploi du temps trucs</title>
+        <dateCreation>2012-01-24</dateCreation>
+        <datePublication>2012-01-24</datePublication>
+        <dateSuppression>2012-01-24</dateSuppression>
+        <description>Exemple</description>
+        <tags>
+            <tag>Tag1</tag>
+            <tag>Tag2</tag>
+        </tags>
+    </new>
+</news>
+
