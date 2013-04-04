@@ -117,14 +117,14 @@ class News {
      static function generateFormulaire()
      {
          echo '<div class="well">';
-         echo '<h5> <a href="#" data-toggle="collapse" data-target="#create_news"><i class="icon-file"></i> Nouvelle news</a> </h5>';
+         echo '<h5> <a href="#" data-toggle="collapse" data-target="#create_news"><i class="icon-file"></i>'.Lang::LANG_CREATE_NEWS.'</a></h5>';
          echo '<div id="create_news" class="collapse in">';
-         echo '<div><input type="text" placeholder="Titre"></div>';
+         echo '<div><input type="text" placeholder="'.Lang::LANG_PLACEHOLDER_TITLE.'"></div>';
          echo '<div><textarea rows="5" style="width: 1005px; height: 139px;"></textarea></div>';
-         echo '<div>Mot-clés : <input type="text" placeholder="motclé1, motcle2"></div>';
-         echo '<div>Date de supprésion :   <input type="text" placeholder="DD/MM/YYYY"></div>';
-         echo '<div>Date de publication :  <input type="text" placeholder="DD/MM/YYYY"></div>';
-         echo '<div><button class="btn btn-success" type="button">Valider</button></div>';
+         echo '<div>'.Lang::LANG_TAG.': <input type="text" placeholder="'.Lang::LANG_PLACEHOLDER_TAG.'"></div>';
+         echo '<div>'.Lang::LANG_DATE_SUPPRESSION.': <input type="text" pattern="(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d" placeholder="DD/MM/YYYY"></div>';
+         echo '<div>'.Lang::LANG_DATE_PUBLICATION.': <input type="text" pattern="(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d" placeholder="DD/MM/YYYY"></div>';
+         echo '<div><button class="btn btn-success" type="button">'.Lang::LANG_VALIDER.'</button></div>';
          echo '</div>';
          echo '</div>';
      }
@@ -159,16 +159,25 @@ class News {
         $string_tag = '';
         $separator = ',';
 
+        /*TAG Class*/
+        $string_class = '';
+        $string_class_separator = ' ';
+
         foreach($this->tags as $key => $tag)
         {
-            $string_tag = $string_tag.'<a href="#filter#">'.$tag->getLibelle().'</a>';
+            $string_tag = $string_tag.''.$tag->getLink();
+            $string_class = $string_class.''.strtolower($tag->getLibelle());
+
 
             if($tag != end($this->tags))
             {
                 $string_tag = $string_tag.$separator;
+                $string_class = $string_class.$string_class_separator;
             }
-
         }
+
+
+
 
         /*DATE*/
         $string_date = '';
@@ -176,7 +185,7 @@ class News {
         $string_date = $string_date.'<small>'.Lang::LANG_DATE_PUBLICATION.': '.$this->getDatePublication().'</small><br>';
         $string_date = $string_date.'<small>'.Lang::LANG_DATE_SUPPRESSION.': '.$this->getDateSuppresion().'</small>';
 
-        echo '<div class="well">';
+        echo '<div class="obj_news '.$string_class.' well">';
         echo '<div class="text-right"><a href="#delete#" class="delete" data-toggle="tooltip" title="'.Lang::LANG_SUPPRIMER.'"><i class="icon-remove"></i></a></div>';
         echo '<h2>';
         echo $this->getTitle();
