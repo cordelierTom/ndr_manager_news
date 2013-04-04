@@ -39,24 +39,48 @@ class Tag {
         return in_array((string)$tag, Tag::$tags_list);
     }
 
+
     /*
      * 
      */
+    public function getLink()
+    {
+         return Tag::generateLink($this->libelle);
+    }
+
+    static function generateLink($libelle, $icon=false)
+    {
+
+        $data = '<a class="filter '.strtolower($libelle).'" href="#filter#">'.$libelle;
+        if($icon)
+        {
+            $data .=' <i class="filtericon '.strtolower($libelle).' icon-ok" ></i>';
+        }
+        $data .= '</a>';
+        return  $data;
+    }
+
+    /*
+     * Generere le menu de gauche
+     */
     static function generateMenu()
     {
+        $menu = "";
         sort(Tag::$tags_list, SORT_STRING);
-        
-        echo '<div class="span3">';
-            echo '<div class="well sidebar-nav">';
-                echo '<ul class="nav nav-list">';
-                     echo '<li class="nav-header">'.LANG::LANG_FILTRE_TAG.'</li>';
-                     /*Link tag*/
-                     foreach(Tag::$tags_list as $tag_id => $libelle)
-                     {
-                         echo '<li><a href="#filter#">'.$libelle.'</a></li>';
-                     }
-                echo '</ul>';
-            echo '</div><!--/.well -->';
-        echo ' </div><!--/span-->';
+
+        $menu .= '<div class="span3">';
+        $menu .= '<div class="well sidebar-nav">';
+        $menu .= '<ul class="nav nav-list">';
+        $menu .= '<li class="nav-header">'.LANG::LANG_FILTRE_TAG.'</li>';
+        $menu .= '<li><a class="filter all" href="#filter#">'.Lang::LANG_FILTRE_ALL.' <i class="filtericon all icon-ok" hidden="true"></i></a></li>';
+        /*Link tag*/
+        foreach(Tag::$tags_list as $tag_id => $libelle) {
+            $menu .=  '<li>'.Tag::generateLink($libelle, true).'</li>';
+        }
+        $menu .=  '</ul>';
+        $menu .=  '</div><!--/.well -->';
+        $menu .=  ' </div><!--/span-->';
+
+        return $menu;
     }
 }
