@@ -16,7 +16,7 @@ class News {
     private $datePublication;
 
 
-    public function __construct($title, $dateCreation, $dateSuppresion, $datePublication, $dateSupression, $description, $tags) {
+    public function __construct($title, $dateCreation, $dateSuppresion, $datePublication, $description, $tags) {
         $this->title = $title;
         $this->dateCreation = $dateCreation;
         $this->dateSuppresion = $dateSuppresion;
@@ -62,7 +62,7 @@ class News {
 
            // @ TODO : Clean constructeur directement passé l'objet.
            if(!News::exist($id))
-            News::$news_list[] = new News($title, $dateCreation, $dateSuppresion, $datePublication, $dateSuppresion, $description, $tags);
+            News::$news_list[] = new News($title, $dateCreation, $dateSuppresion, $datePublication, $description, $tags);
        }
     }
 
@@ -120,12 +120,12 @@ class News {
          $formulaire .= '<div class="well">';
          $formulaire .= '<h5> <a href="#" data-toggle="collapse" data-target="#create_news"><i class="icon-file"></i>'.Lang::LANG_CREATE_NEWS.'</a></h5>';
          $formulaire .= '<div id="create_news" class="collapse in">';
-         $formulaire .= '<div><input type="text" placeholder="'.Lang::LANG_PLACEHOLDER_TITLE.'"></div>';
-         $formulaire .= '<div><textarea rows="5" style="width: 1005px; height: 139px;"></textarea></div>';
-         $formulaire .= '<div>'.Lang::LANG_TAG.': <input type="text" placeholder="'.Lang::LANG_PLACEHOLDER_TAG.'"></div>';
-         $formulaire .= '<div>'.Lang::LANG_DATE_SUPPRESSION.': <input type="text" pattern="(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d" placeholder="DD/MM/YYYY"></div>';
-         $formulaire .= '<div>'.Lang::LANG_DATE_PUBLICATION.': <input type="text" pattern="(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d" placeholder="DD/MM/YYYY"></div>';
-         $formulaire .= '<div><button class="btn btn-success" type="button">'.Lang::LANG_VALIDER.'</button></div>';
+         $formulaire .= '<div><input name="titre" type="text" placeholder="'.Lang::LANG_PLACEHOLDER_TITLE.'"></div>';
+         $formulaire .= '<div><textarea name="message" rows="5" style="width: 1005px; height: 139px;"></textarea></div>';
+         $formulaire .= '<div>'.Lang::LANG_TAG.': <input name ="tags" type="text" placeholder="'.Lang::LANG_PLACEHOLDER_TAG.'"></div>';
+         $formulaire .= '<div>'.Lang::LANG_DATE_SUPPRESSION.': <input name="dateSuppression" type="text" pattern="(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d" placeholder="DD/MM/YYYY"></div>';
+         $formulaire .= '<div>'.Lang::LANG_DATE_PUBLICATION.': <input name="datePublication" type="text" pattern="(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d" placeholder="DD/MM/YYYY"></div>';
+         $formulaire .= '<div><button id="confirmAddNews"class="btn btn-success" type="button">'.Lang::LANG_VALIDER.'</button></div>';
          $formulaire .= '</div>';
          $formulaire .= '</div>';
 
