@@ -172,19 +172,19 @@ class News {
 
         /*DATE*/
         $string_date = '';
-        $string_date = $string_date.'<small>Date de création : '.$this->getDateCreation().'</small><br>';
-        $string_date = $string_date.'<small>Date de supprésion: '.$this->getDateCreation().'</small><br>';
-        $string_date = $string_date.'<small>Date de publication: '.$this->getDateCreation().'</small>';
+        $string_date = $string_date.'<small>'.Lang::LANG_DATE_CREATION.' : '.$this->getDateCreation().'</small><br>';
+        $string_date = $string_date.'<small>'.Lang::LANG_DATE_PUBLICATION.': '.$this->getDatePublication().'</small><br>';
+        $string_date = $string_date.'<small>'.Lang::LANG_DATE_SUPPRESSION.': '.$this->getDateSuppresion().'</small>';
 
         echo '<div class="well">';
-        echo '<div class="text-right"><a href="#delete#"><i class="icon-remove"></i></a></div>';
+        echo '<div class="text-right"><a href="#delete#" class="delete" data-toggle="tooltip" title="'.Lang::LANG_SUPPRIMER.'"><i class="icon-remove"></i></a></div>';
         echo '<h2>';
         echo $this->getTitle();
         echo '</h2>';
         echo '<p>';
         echo $this->getDescription();
-        echo '<div class="text-right"><a class="calendar" data-content="'.$string_date.'" data-html="true" data-placement="left" href="#calendar#" data-original-title="Informations"><i class="icon-calendar"></i></a></div>';
-        echo '<div class="text-left"><small>Mot-clés : '.$string_tag.'</small></div>';
+        echo '<div class="text-right"><a class="calendar" data-content="'.$string_date.'" data-html="true" data-placement="left" href="#calendar#" data-original-title="'.Lang::LANG_TITLE_CALENDAR.'><i class="icon-calendar"></i></a></div>';
+        echo '<div class="text-left"><small>'.Lang::LANG_TAG.': '.$string_tag.'</small></div>';
         echo '</p>';
         echo '<hr></hr>';
         echo '</div>';

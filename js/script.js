@@ -6,7 +6,8 @@
 function($)
 {
     $(".calendar").popover();
-    $("#create_news").collapse()
+    $(".delete").tooltip();
+    $("#create_news").collapse();
 }
 )(jQuery);
 

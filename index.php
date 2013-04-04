@@ -1,19 +1,22 @@
 <!DOCTYPE html>
 <html lang="fr">
+    <?php
+         //@TODO : AUTOLOAD
+        include("class/news.class.php");
+        include("class/tag.class.php");
+        
+        include("class/lang_fr.class.php");
+    ?>
+
     <head>
-        <title>Géstion des actualites</title>
+        <title><?php echo Lang::LANG_PAGE_TITLE; ?></title>
         <!-- Le styles -->
-        <meta charset="utf-8"></meta>
+        <meta charset="UTF-8">
         <link href="./css/bootstrap.min.css" rel="stylesheet">
         <link href="./css/bootstrap.css" rel="stylesheet">
         <link href="./css/bootstrap-responsive.css" rel="stylesheet">
         <link href="./css/style.css" rel="stylesheet">
     </head>
-
-    <?php
-        include("class/news.class.php");
-        include("class/tag.class.php");
-    ?>
 
     <body>
         <div class="container-fluid">

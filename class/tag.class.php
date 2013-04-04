@@ -46,12 +46,10 @@ class Tag {
     {
         sort(Tag::$tags_list, SORT_STRING);
         
-        $title_menu = "Filtre par mot-clés";
-
         echo '<div class="span3">';
             echo '<div class="well sidebar-nav">';
                 echo '<ul class="nav nav-list">';
-                     echo '<li class="nav-header">'.$title_menu.'</li>';
+                     echo '<li class="nav-header">'.LANG::LANG_FILTRE_TAG.'</li>';
                      /*Link tag*/
                      foreach(Tag::$tags_list as $tag_id => $libelle)
                      {
