@@ -116,17 +116,20 @@ class News {
 
      static function generateFormulaire()
      {
-         echo '<div class="well">';
-         echo '<h5> <a href="#" data-toggle="collapse" data-target="#create_news"><i class="icon-file"></i>'.Lang::LANG_CREATE_NEWS.'</a></h5>';
-         echo '<div id="create_news" class="collapse in">';
-         echo '<div><input type="text" placeholder="'.Lang::LANG_PLACEHOLDER_TITLE.'"></div>';
-         echo '<div><textarea rows="5" style="width: 1005px; height: 139px;"></textarea></div>';
-         echo '<div>'.Lang::LANG_TAG.': <input type="text" placeholder="'.Lang::LANG_PLACEHOLDER_TAG.'"></div>';
-         echo '<div>'.Lang::LANG_DATE_SUPPRESSION.': <input type="text" pattern="(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d" placeholder="DD/MM/YYYY"></div>';
-         echo '<div>'.Lang::LANG_DATE_PUBLICATION.': <input type="text" pattern="(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d" placeholder="DD/MM/YYYY"></div>';
-         echo '<div><button class="btn btn-success" type="button">'.Lang::LANG_VALIDER.'</button></div>';
-         echo '</div>';
-         echo '</div>';
+         $formulaire = '';
+         $formulaire .= '<div class="well">';
+         $formulaire .= '<h5> <a href="#" data-toggle="collapse" data-target="#create_news"><i class="icon-file"></i>'.Lang::LANG_CREATE_NEWS.'</a></h5>';
+         $formulaire .= '<div id="create_news" class="collapse in">';
+         $formulaire .= '<div><input type="text" placeholder="'.Lang::LANG_PLACEHOLDER_TITLE.'"></div>';
+         $formulaire .= '<div><textarea rows="5" style="width: 1005px; height: 139px;"></textarea></div>';
+         $formulaire .= '<div>'.Lang::LANG_TAG.': <input type="text" placeholder="'.Lang::LANG_PLACEHOLDER_TAG.'"></div>';
+         $formulaire .= '<div>'.Lang::LANG_DATE_SUPPRESSION.': <input type="text" pattern="(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d" placeholder="DD/MM/YYYY"></div>';
+         $formulaire .= '<div>'.Lang::LANG_DATE_PUBLICATION.': <input type="text" pattern="(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d" placeholder="DD/MM/YYYY"></div>';
+         $formulaire .= '<div><button class="btn btn-success" type="button">'.Lang::LANG_VALIDER.'</button></div>';
+         $formulaire .= '</div>';
+         $formulaire .= '</div>';
+
+         return $formulaire;
      }
 
     /*
@@ -135,18 +138,22 @@ class News {
      */
     static function viewAll($id = NULL)
     {
+        $news_view = '';
+
         if(isset($id))
         {
             if(Views::exist($id))
-                Views::$list_views[$id]->view;
+                $news_view = Views::$list_views[$id]->view();
         }
         else
         {
-            foreach (News::$news_list as $news)
+            foreach(News::$news_list as $news)
             {
-                $news->view();
+                $news_view .= $news->view();
             }
         }
+
+        return $news_view;
     }
 
     /*
@@ -176,27 +183,27 @@ class News {
             }
         }
 
-
-
-
         /*DATE*/
         $string_date = '';
         $string_date = $string_date.'<small>'.Lang::LANG_DATE_CREATION.' : '.$this->getDateCreation().'</small><br>';
         $string_date = $string_date.'<small>'.Lang::LANG_DATE_PUBLICATION.': '.$this->getDatePublication().'</small><br>';
         $string_date = $string_date.'<small>'.Lang::LANG_DATE_SUPPRESSION.': '.$this->getDateSuppresion().'</small>';
 
-        echo '<div class="obj_news '.$string_class.' well">';
-        echo '<div class="text-right"><a href="#delete#" class="delete" data-toggle="tooltip" title="'.Lang::LANG_SUPPRIMER.'"><i class="icon-remove"></i></a></div>';
-        echo '<h2>';
-        echo $this->getTitle();
-        echo '</h2>';
-        echo '<p>';
-        echo $this->getDescription();
-        echo '<div class="text-right"><a class="calendar" data-content="'.$string_date.'" data-html="true" data-placement="left" href="#calendar#" data-original-title="'.Lang::LANG_TITLE_CALENDAR.'><i class="icon-calendar"></i></a></div>';
-        echo '<div class="text-left"><small>'.Lang::LANG_TAG.': '.$string_tag.'</small></div>';
-        echo '</p>';
-        echo '<hr></hr>';
-        echo '</div>';
+        $view = '';
+        $view .= '<div class="obj_news '.$string_class.' well">';
+        $view .= '<div class="text-right"><a href="#delete#" class="delete" data-toggle="tooltip" title="'.Lang::LANG_SUPPRIMER.'"><i class="icon-remove"></i></a></div>';
+        $view .= '<h2>';
+        $view .= $this->getTitle();
+        $view .= '</h2>';
+        $view .= '<p>';
+        $view .= $this->getDescription();
+        $view .= '<div class="text-right"><a class="calendar" data-content="'.$string_date.'" data-html="true" data-placement="left" href="#calendar#" data-original-title="'.Lang::LANG_TITLE_CALENDAR.'><i class="icon-calendar"></i></a></div>';
+        $view .= '<div class="text-left"><small>'.Lang::LANG_TAG.': '.$string_tag.'</small></div>';
+        $view .= '</p>';
+        $view .= '<hr></hr>';
+        $view .= '</div>';
+
+        return $view;
     }
 
     /*

@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="fr">
-
     <head>
         <title><?php echo Lang::LANG_PAGE_TITLE; ?></title>
         <!-- Le styles -->
@@ -15,13 +14,12 @@
         <div class="container-fluid">
                 <div class="row-fluid">
                     <?php
-                    echo $this->news;
                     echo $this->tag;
                     ?>
                 <div class="span9">
-                    <?php 
-                    echo $view->newsForm;
-                    echo $view->newsAll;
+                    <?php
+                    echo $this->newsForm;
+                    echo $this->newsAll;
                     ?>
                 </div>
             </div>
