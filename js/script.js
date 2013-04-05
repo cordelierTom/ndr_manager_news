@@ -8,20 +8,20 @@
     $(".delete").tooltip();
     $("#create_news").collapse();
 
-    $('#confirmAddNews').click(function(){
-        $form=$(this).parents('.well:first');
-        $.ajax({
+    $('#confirmAddNews').click(function(){ 
+        $.ajax(
+        {
             type: "POST",
             url:'addNews.php',
+            
             data: {
-                'action':'addNews',
-                'titre':$form.find('[name="titre"]:first').val(),
-                'message':$form.find('[name="message"]:first').val(),
-                'tags':$form.find('[name="tags"]:first').val().split(','),
-                'dateSuppression':$form.find('[name="dateSuppression"]:first').val(),
-                'datePublication':$form.find('[name="datePublication"]:first').val()
+                'title' : document.addNews.title.value,
+                'message' : document.addNews.message.value,
+                'tags' : document.addNews.tags.value,
+                'dateSuppression' : document.addNews.dateSuppression.value,
+                'datePublication' : document.addNews.datePublication.value
             },
-            dataType:'JSON',
+            
             success: function(result){
                 alert(result);
             }

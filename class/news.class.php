@@ -16,7 +16,7 @@ class News {
     private $datePublication;
 
 
-    public function __construct($title, $dateCreation, $dateSuppresion, $datePublication, $description, $tags) {
+    function __construct($title, $dateCreation, $dateSuppresion, $datePublication, $description, $tags) {
         $this->title = $title;
         $this->dateCreation = $dateCreation;
         $this->dateSuppresion = $dateSuppresion;
@@ -26,9 +26,33 @@ class News {
     }
 
 
+    /*
+     * 
+     */
     public function save()
     {
-        
+        News::loadNews();
+        News::$news_list[] = $this;
+
+        $news =  simplexml_load_file(constant('News::data_dir')."/" .constant('News::data_file').".xml");
+
+        $new = $news->addChild("news");
+        $news->addChild("id", 100); //@TODO  Fix ME
+        $new->addChild("description", $this->getDescription());
+        $new->addChild("title", $this->getTitle());
+        $new->addChild("dateCreation", $this->dateCreation);
+        $new->addChild("datePublication", $this->datePublication);
+        $new->addChild("dateSuppresion", $this->dateSuppresion);
+        $tags = $new->addChild("tags");
+        foreach ($this->tags as $tag)
+        {
+            $tags->addChild("tag", $tag);
+        }
+
+        //@TODO: FIX ME
+        /*
+        $fp = fopen('test.txt', 'w');
+        fwrite($fp, $news->asXML());*/
     }
 
     /**
@@ -71,13 +95,13 @@ class News {
      * DATE
      */
 
-    function datefr2us($datefr)
+    static function datefr2us($datefr)
     {
         $dateus=explode('/',$datefr);
         return $dateus[2].'-'.$dateus[1].'-'.$dateus[0];
     }
 
-    function dateus2fr($dateus)
+    static function dateus2fr($dateus)
     {
         $datefr=explode('-',$dateus);
         return $datefr[2].'/'.$datefr[1].'/'.$datefr[0];
@@ -120,12 +144,14 @@ class News {
          $formulaire .= '<div class="well">';
          $formulaire .= '<h5> <a href="#" data-toggle="collapse" data-target="#create_news"><i class="icon-file"></i>'.Lang::LANG_CREATE_NEWS.'</a></h5>';
          $formulaire .= '<div id="create_news" class="collapse in">';
-         $formulaire .= '<div><input name="titre" type="text" placeholder="'.Lang::LANG_PLACEHOLDER_TITLE.'"></div>';
-         $formulaire .= '<div><textarea name="message" rows="5" style="width: 1005px; height: 139px;"></textarea></div>';
-         $formulaire .= '<div>'.Lang::LANG_TAG.': <input name ="tags" type="text" placeholder="'.Lang::LANG_PLACEHOLDER_TAG.'"></div>';
-         $formulaire .= '<div>'.Lang::LANG_DATE_SUPPRESSION.': <input name="dateSuppression" type="text" pattern="(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d" placeholder="DD/MM/YYYY"></div>';
-         $formulaire .= '<div>'.Lang::LANG_DATE_PUBLICATION.': <input name="datePublication" type="text" pattern="(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d" placeholder="DD/MM/YYYY"></div>';
+         $formulaire .= '<form name="addNews">';
+         $formulaire .= '<div><input name="title" type="text" placeholder="'.Lang::LANG_PLACEHOLDER_TITLE.'" required></div>';
+         $formulaire .= '<div><textarea name="message" rows="5" style="width: 1005px; height: 139px;" required></textarea></div>';
+         $formulaire .= '<div>'.Lang::LANG_TAG.': <input name ="tags" type="text" placeholder="'.Lang::LANG_PLACEHOLDER_TAG.'" required></div>';
+         $formulaire .= '<div>'.Lang::LANG_DATE_SUPPRESSION.': <input name="dateSuppression" type="text" pattern="(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d" placeholder="DD/MM/YYYY" required></div>';
+         $formulaire .= '<div>'.Lang::LANG_DATE_PUBLICATION.': <input name="datePublication" type="text" pattern="(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d" placeholder="DD/MM/YYYY" required></div>';
          $formulaire .= '<div><button id="confirmAddNews"class="btn btn-success" type="button">'.Lang::LANG_VALIDER.'</button></div>';
+         $formulaire .= '</form>';
          $formulaire .= '</div>';
          $formulaire .= '</div>';
 
