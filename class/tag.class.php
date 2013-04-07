@@ -36,7 +36,7 @@ class Tag {
     static function exist($tag)
     {
         //Cast en string car $tag est un SimpleXML Object
-        return in_array((string)$tag, Tag::$tags_list);
+        return in_array($tag, Tag::$tags_list);
     }
 
 

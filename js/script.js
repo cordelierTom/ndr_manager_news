@@ -8,6 +8,11 @@
     $(".delete").tooltip();
     $("#create_news").collapse();
 
+
+     $('.new_delete').click(function(event){
+       alert(event.target.id);
+   })
+
     $('#confirmAddNews').click(function(){ 
         $.ajax(
         {
@@ -24,6 +29,7 @@
             
             success: function(result){
                 alert(result);
+                location.reload(true);
             }
         });
     });

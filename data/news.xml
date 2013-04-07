@@ -26,5 +26,4 @@
             <tag>Tag2</tag>
         </tags>
     </new>
-</news>
-
+<new><id>2</id><description>Test</description><title>Totomakers</title><dateCreation>13-04-07</dateCreation><datePublication>1994-01-25</datePublication><dateSuppression>1994-01-25</dateSuppression><tags><tag>tagcaché</tag></tags></new></news>

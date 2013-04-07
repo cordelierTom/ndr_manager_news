@@ -1,11 +1,10 @@
 <?php
 
- //@TODO : AUTOLOAD
-include("class/news.class.php");
-include("class/tag.class.php");
-include("class/view.class.php");
-include("class/lang_fr.class.php");
+function __autoload($class_name){
+    include 'class/'.strtolower($class_name). '.class.php';
+}
 
+include("class/lang_fr.class.php");
 include("params.php");
 
 $view=new View('index');
