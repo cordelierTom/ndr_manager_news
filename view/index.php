@@ -18,6 +18,7 @@
                     ?>
                 <div class="span9">
                     <?php
+                    echo $this->alert;
                     echo $this->newsForm;
                     echo $this->newsAll;
                     ?>

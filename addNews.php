@@ -7,7 +7,6 @@ function __autoload($class_name){
 include("class/lang_fr.class.php");
 include("params.php");
 
-//Traitement des tags
 //@TODO : MOVE IT
 if(isset($_POST))
 {
@@ -23,6 +22,7 @@ if(isset($_POST))
     if(isset($_POST["title"]))
         $title = $_POST["title"];
 
+    //Traitement des tags
     if(isset($_POST["tags"]))
         $tags = split(",", $_POST["tags"]);
 
@@ -38,8 +38,4 @@ if(isset($_POST))
 
     $news = new News($id, $title, $dateCreation, $dateSuppression, $datePublication, $message, $tags);
     $news->save();
-    
-    echo "News sauvegarder";
 }
-
-

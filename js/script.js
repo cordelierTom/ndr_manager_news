@@ -4,35 +4,53 @@
  */
 (function($)
 {
-    $(".calendar").popover();
-    $(".delete").tooltip();
-    $("#create_news").collapse();
+        /*
+         * Design
+        */
+        $(".calendar").popover();
+        $(".new_delete").tooltip();
+        $("#create_news").collapse();
 
+        // Suppression
+        $('.new_delete').click(function(){
 
-     $('.new_delete').click(function(event){
-       alert(event.target.id);
-   })
+            $.ajax(
+            {
+                type: "POST",
+                url:'deleteNews.php',
 
-    $('#confirmAddNews').click(function(){ 
-        $.ajax(
-        {
-            type: "POST",
-            url:'addNews.php',
+                data: {
+                    'id' :  $(this).attr("id")
+                },
+
+                success: function(){
+                   location.reload(true);
+                    $(".alert").filter("#delete").show();
+                }
+            });
+        })
+
+        //Ajout
+        $('#confirmAddNews').click(function(){
+            $.ajax(
+            {
+                type: "POST",
+                url:'addNews.php',
             
-            data: {
-                'title' : document.addNews.title.value,
-                'message' : document.addNews.message.value,
-                'tags' : document.addNews.tags.value,
-                'dateSuppression' : document.addNews.dateSuppression.value,
-                'datePublication' : document.addNews.datePublication.value
-            },
+                data: {
+                    'title' : document.addNews.title.value,
+                    'message' : document.addNews.message.value,
+                    'tags' : document.addNews.tags.value,
+                    'dateSuppression' : document.addNews.dateSuppression.value,
+                    'datePublication' : document.addNews.datePublication.value
+                },
             
-            success: function(result){
-                alert(result);
-                location.reload(true);
-            }
+                success: function(){
+                    location.reload(true);
+                    $(".alert").filter("#add").show();
+                }
+            });
         });
-    });
 
     /*
      *
@@ -122,5 +140,3 @@
     });
 }
 )(jQuery);
-
-

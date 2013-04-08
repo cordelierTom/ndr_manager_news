@@ -1,29 +1,12 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- Edited by XMLSpy� -->
-<news>
-    <new>
-        <id>0</id>
-        <title>Absence de machin</title>
-        <dateCreation>2012-01-24</dateCreation>
-        <datePublication>2012-01-24</datePublication>
-        <dateSuppression>2012-01-24</dateSuppression>
-        <description>Exemple</description>
-        <tags>
-            <tag>Tag1</tag>
-            <tag>Tag3</tag>
-        </tags>
-    </new>
-
-     <new>
-        <id>1</id>
-        <title>Modification emploi du temps trucs</title>
-        <dateCreation>2012-01-24</dateCreation>
-        <datePublication>2012-01-24</datePublication>
-        <dateSuppression>2012-01-24</dateSuppression>
-        <description>Exemple</description>
-        <tags>
-            <tag>Tag1</tag>
-            <tag>Tag2</tag>
-        </tags>
-    </new>
-<new><id>2</id><description>Test</description><title>Totomakers</title><dateCreation>13-04-07</dateCreation><datePublication>1994-01-25</datePublication><dateSuppression>1994-01-25</dateSuppression><tags><tag>tagcaché</tag></tags></new></news>
+<?xml version="1.0"?>
+<new>
+  <id>2</id>
+  <description>test2</description>
+  <title>test</title>
+  <dateCreation>13-04-08</dateCreation>
+  <datePublication>2013-04-08</datePublication>
+  <dateSuppression>2013-04-08</dateSuppression>
+  <tags>
+    <tag>test</tag>
+  </tags>
+</new>

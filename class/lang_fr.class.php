@@ -17,6 +17,8 @@ class Lang {
     const LANG_CREATE_NEWS = 'Nouvelle news';
     const LANG_PLACEHOLDER_TITLE = 'Titre';
     const LANG_PLACEHOLDER_TAG = 'motclé1, motcle2';
+
+    const LANG_NEW_DELETE = "New supprimer";
+    const LANG_NEW_ADD = "New ajouter";
     
 }
-?>

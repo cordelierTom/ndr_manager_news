@@ -6,7 +6,7 @@ class Tag {
     static public $tags_list = array();
 
     /*
-     * 
+     * @param String libelle
      */
     public function __construct($libelle) {
         $this->libelle = $libelle;
@@ -41,13 +41,18 @@ class Tag {
 
 
     /*
-     * 
+     * Génére le lien du tag
      */
     public function getLink()
     {
          return Tag::generateLink($this->libelle);
     }
 
+    /*
+     *  @param String $libelle
+     *  @param Bool $icon
+     *  Génére le lien avec ou sans icone actif
+     */
     static function generateLink($libelle, $icon=false)
     {
 
@@ -61,7 +66,7 @@ class Tag {
     }
 
     /*
-     * Generere le menu de gauche
+     * Generere le menu des filtres
      */
     static function generateMenu()
     {

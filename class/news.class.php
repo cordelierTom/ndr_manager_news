@@ -17,6 +17,16 @@ class News {
     private $datePublication;
 
 
+    /**
+     *
+     * @param Uint $id
+     * @param String $title
+     * @param String $dateCreation
+     * @param String $dateSuppression
+     * @param String $datePublication
+     * @param String $description
+     * @param Array() $tags
+     */
     function __construct($id, $title, $dateCreation, $dateSuppression, $datePublication, $description, $tags) {
         $this->id = $id;
         $this->title = $title;
@@ -27,14 +37,89 @@ class News {
         $this->tags = $tags;
     }
 
+     /*** *************
+     * GETTER
+     **************** */
+
+    /**
+     *
+     * @return Uint
+     */
+    static function getLastId()
+    {
+        if(end(News::$news_list))
+            return end(News::$news_list)->id;
+
+        return 0;
+    }
 
     /*
-     * 
+     * @return Uint
+     */
+    public function getId() {
+        return $this->id;
+    }
+
+
+    /**
+     *
+     * @return String
+     */
+    public function getTitle() {
+        return $this->title;
+    }
+
+    /**
+     *
+     * @return String
+     */
+    public function getDescription() {
+        return $this->description;
+    }
+
+    /**
+     * /!\ Attention format DD/MM/YYYY par defaut
+     * @return Date
+     */
+    public function getDateCreation($format_fr = true) {
+
+        if($format_fr)
+            return Date::dateus2fr($this->dateCreation);
+        else
+            return $this->dateCreation;
+    }
+
+     /**
+     * /!\ Attention format DD/MM/YYYY par defaut
+     * @return Date
+     */
+    public function getDateSuppression($format_fr = true) {
+        if($format_fr)
+            return Date::dateus2fr($this->dateSuppression);
+        else
+           $this->dateSuppression;
+    }
+
+     /**
+     * /!\ Attention format DD/MM/YYYY par defaut
+     * @return Date
+     */
+    public function getDatePublication($format_fr = true) {
+        if($format_fr)
+            return Date::dateus2fr($this->datePublication);
+        else
+            $this->datePublication;
+    }
+
+    /******************************
+     * DATA
+     ***************************** */
+    
+    /*
+     * Sauvegarde la news dans le fichier
      */
     public function save()
     {
-        News::loadNews();
-
         $news =  simplexml_load_file(constant('News::data_dir')."/" .constant('News::data_file').".xml");
 
         $new = $news->addChild("new");
@@ -45,27 +130,61 @@ class News {
         $new->addChild("datePublication", $this->datePublication);
         $new->addChild("dateSuppression", $this->dateSuppression);
         $tags = $new->addChild("tags");
-
+      
         foreach ($this->tags as $tag)
         {
             $tags->addChild("tag", $tag);
         }
 
-        $news->asXML(constant('News::data_dir')."/" .constant('News::data_file').".xml");
-        News::$news_list[] = $this;
+        XML::saveXMLDocument($news, constant('News::data_dir')."/" .constant('News::data_file').".xml");
+        News::$news_list[$this->id] = $this;
     }
 
+
     /**
-     * 
+     * Supprime la news du fichier
+     * @param Uint $id
+     */
+    static function delete($id)
+    {
+        News::loadNews();
+        //On charge les news
+        $news =  simplexml_load_file(constant('News::data_dir')."/" .constant('News::data_file').".xml");
+
+        $count = 0;
+        foreach ($news->new as $new)
+        {
+            if($id == XML::SimpleXmlElementToInt($new->id))
+            {
+               unset($news->new[$count]);
+               break;
+            }
+            $count++;
+        }
+
+        XML::saveXMLDocument($news , constant('News::data_dir')."/" .constant('News::data_file').".xml");
+        array_splice(News::$news_list, $id, 1);
+    }
+
+    static function edit($id)
+    {
+
+    }
+
+    /****************
+     * OTHER
+     *************** */
+
+    /**
+     * Chargement de toute les news a partir du fichier
      */
     static function loadNews()
     {
        $news =  simplexml_load_file(constant('News::data_dir')."/" .constant('News::data_file').".xml");
 
-       //On charge les news
+       //Traitement des news
        foreach ($news->new as $new)
        {
-
            $id = XML::SimpleXmlElementToInt($new->id);
            $title = XML::SimpleXmlElementToString($new->title);
            $dateCreation = XML::SimpleXmlElementToString($new->dateCreation);
@@ -89,46 +208,6 @@ class News {
            if(!News::exist($id))
                 News::$news_list[$id] = new News($id, $title, $dateCreation, $dateSuppression, $datePublication, $description, $tags);
        }
-    }
-
-
-    /***
-     * GETTER
-     */
-
-    static function getLastId()
-    {
-        if(end(News::$news_list))
-            return end(News::$news_list)->id;
-
-        return 0;
-    }
-
-    public function getId() {
-        return $this->id;
-    }
-
-   
-    public function getTitle() {
-        return $this->title;
-    }
-
-
-    public function getDescription() {
-        return $this->description;
-    }
-
-    public function getDateCreation() {
-        return Date::dateus2fr($this->dateCreation);
-    }
-
-    public function getDateSuppression() {
-        return Date::dateus2fr($this->dateSuppression);
-    }
-
-
-    public function getDatePublication() {
-        return Date::dateus2fr($this->datePublication);
     }
 
     /**
@@ -156,7 +235,7 @@ class News {
      }
 
     /*
-     * Genere toute les news
+     * Genere toute les news ou une new
      * 
      */
     static function viewAll($id = NULL)
@@ -180,7 +259,7 @@ class News {
     }
 
     /*
-     * Genere une news
+     * Genere la vu de la new
      */
     public function view()
     {
@@ -212,6 +291,7 @@ class News {
         $string_date .='<small>'.Lang::LANG_DATE_PUBLICATION.': '.$this->getDatePublication().'</small><br>';
         $string_date .='<small>'.Lang::LANG_DATE_SUPPRESSION.': '.$this->getDateSuppression().'</small>';
 
+        /*VIEW*/
         $view = '';
         $view .= '<div class="obj_news '.$string_class.' well">';
         $view .= '<div class="text-right"><a href="#delete#" class="new_delete" id="'.$this->id.'" data-toggle="tooltip" title="'.Lang::LANG_SUPPRIMER.'"><i class="icon-remove"></i></a></div>';
@@ -230,8 +310,17 @@ class News {
     }
 
     /*
-     *
-     * 
+     * Alerte(s) haut de page
+     */
+    static function generateAlert()
+    {
+        $alert = '<div class="alert fade in" id="delete" hidden><button class="close" data-dismiss="alert" type="button">×</button>'.Lang::LANG_NEW_DELETE.'</div>';
+        $alert .= '<div class="alert fade in" id="add" hidden><button class="close" data-dismiss="alert" type="button">×</button>'.Lang::LANG_NEW_ADD.'</div>';
+        return $alert;
+    }
+
+    /*
+     * @param Uint id
      */
     static function exist($id)
     {
@@ -241,33 +330,5 @@ class News {
         }
 
         return false;
-    }
-
-    /*
-     * 
-     */
-
-    static function delete($id)
-    {
-        News::loadNews();
-        $news =  simplexml_load_file(constant('News::data_dir')."/" .constant('News::data_file').".xml");
-
-
-         //On charge les news
-        foreach ($news->new as $key => $new)
-        {
-            if($id == XML::SimpleXmlElementToInt($new->id))
-            {
-                unset($news->new[$key]);
-                echo $news->asXML();
-                break;
-            }
-        }
-    }
-
-
-    static function edit($id)
-    {
-       
     }
 }
