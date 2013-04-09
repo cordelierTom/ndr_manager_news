@@ -190,7 +190,7 @@ class News {
            $dateCreation = XML::SimpleXmlElementToString($new->dateCreation);
            $dateSuppression = XML::SimpleXmlElementToString($new->dateSuppression);
            $datePublication = XML::SimpleXmlElementToString($new->datePublication);
-           $description = XML::SimpleXmlElementToString($new->description);
+           $description = str_replace("\n", "<br>", XML::SimpleXmlElementToString($new->description));
            $tags = array();
 
            //Add tags
