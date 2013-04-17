@@ -9,34 +9,35 @@
         */
         $(".calendar").popover();
         $(".new_delete").tooltip();
+        $(".new_edit").tooltip();
         $("#create_news").collapse();
 
         // Suppression
         $('.new_delete').click(function(){
-
+            var id = $(this).attr("id").replace("delete_", "");
             $.ajax(
             {
                 type: "POST",
                 url:'deleteNews.php',
 
                 data: {
-                    'id' :  $(this).attr("id")
+                    'id' :  id
                 },
 
                 success: function(){
                    location.reload(true);
-                    $(".alert").filter("#delete").show();
+                   $("#alert_delete").show();
                 }
             });
         })
 
-        //Ajout
+       //Ajout
         $('#confirmAddNews').click(function(){
             $.ajax(
             {
                 type: "POST",
                 url:'addNews.php',
-            
+
                 data: {
                     'title' : document.addNews.title.value,
                     'message' : document.addNews.message.value,
@@ -44,13 +45,24 @@
                     'dateSuppression' : document.addNews.dateSuppression.value,
                     'datePublication' : document.addNews.datePublication.value
                 },
-            
+
                 success: function(){
                     location.reload(true);
-                    $(".alert").filter("#add").show();
+                    $("#alert_add").show();
                 }
             });
         });
+
+        //Edit
+        $('.new_edit').click(function(){
+          /* var id = $(this).attr("id").replace("edit_", "");
+           var news = $("#new_"+id);
+           var clone = $("#create_news").clone();
+           clone.append('<button id="retour_'+id+'" class="btn" type="button">Retour</button>');
+
+           news.hide();
+           news.after("<div class=\"well\">"+clone.html()+"</div>"); //@TODO : Use wrap()?*/
+      });
 
     /*
      *

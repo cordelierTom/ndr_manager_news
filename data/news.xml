@@ -9,4 +9,16 @@
   <tags>
     <tag>test</tag>
   </tags>
+  <new>
+    <id>1</id>
+    <description>Contenue a edit
+</description>
+    <title>News</title>
+    <dateCreation>13-04-10</dateCreation>
+    <datePublication>2013-04-10</datePublication>
+    <dateSuppression>2013-04-10</dateSuppression>
+    <tags>
+      <tag>test</tag>
+    </tags>
+  </new>
 </new>

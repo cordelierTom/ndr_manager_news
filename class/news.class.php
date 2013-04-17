@@ -211,7 +211,7 @@ class News {
     }
 
     /**
-     * Genere le formulaire
+     * Genere le formulaire d'edition et de création
      */
 
      static function generateFormulaire()
@@ -226,7 +226,7 @@ class News {
          $formulaire .= '<div>'.Lang::LANG_TAG.': <input name ="tags" type="text" placeholder="'.Lang::LANG_PLACEHOLDER_TAG.'" required></div>';
          $formulaire .= '<div>'.Lang::LANG_DATE_SUPPRESSION.': <input name="dateSuppression" type="text" pattern="(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d" placeholder="DD/MM/YYYY" value="'.date("d/m/Y").'" required></div>';
          $formulaire .= '<div>'.Lang::LANG_DATE_PUBLICATION.': <input name="datePublication" type="text" pattern="(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d" placeholder="DD/MM/YYYY" value="'.date("d/m/Y").'" required></div>';
-         $formulaire .= '<div><button id="confirmAddNews"class="btn btn-success" type="button">'.Lang::LANG_VALIDER.'</button></div>';
+         $formulaire .= '<div class="news_id"><button id="confirmAddNews"class="btn btn-success" type="button">'.Lang::LANG_VALIDER.'</button></div>';
          $formulaire .= '</form>';
          $formulaire .= '</div>';
          $formulaire .= '</div>';
@@ -293,8 +293,11 @@ class News {
 
         /*VIEW*/
         $view = '';
-        $view .= '<div class="obj_news '.$string_class.' well">';
-        $view .= '<div class="text-right"><a href="#delete#" class="new_delete" id="'.$this->id.'" data-toggle="tooltip" title="'.Lang::LANG_SUPPRIMER.'"><i class="icon-remove"></i></a></div>';
+        $view .= '<div class="obj_news '.$string_class.' well" id="new_'.$this->id.'" >';
+        $view .= '<div class="text-right">';
+        $view .= '<a href="#edit#" class="new_edit" id="edit_'.$this->id.'" data-toggle="tooltip" title="'.Lang::LANG_EDIT.'"><i class="icon-edit"></i></a>';
+        $view .= '<a href="#delete#" class="new_delete" id="delete_'.$this->id.'" data-toggle="tooltip" title="'.Lang::LANG_SUPPRIMER.'"><i class="icon-remove"></i></a>';
+        $view .= '</div>';
         $view .= '<h2>';
         $view .= $this->getTitle();
         $view .= '</h2>';
@@ -314,8 +317,8 @@ class News {
      */
     static function generateAlert()
     {
-        $alert = '<div class="alert fade in" id="delete" hidden><button class="close" data-dismiss="alert" type="button">×</button>'.Lang::LANG_NEW_DELETE.'</div>';
-        $alert .= '<div class="alert fade in" id="add" hidden><button class="close" data-dismiss="alert" type="button">×</button>'.Lang::LANG_NEW_ADD.'</div>';
+        $alert = '<div class="alert fade in" id="alert_delete" hidden><button class="close" data-dismiss="alert" type="button">×</button>'.Lang::LANG_NEW_DELETE.'</div>';
+        $alert .= '<div class="alert fade in" id="alert_add" hidden><button class="close" data-dismiss="alert" type="button">×</button>'.Lang::LANG_NEW_ADD.'</div>';
         return $alert;
     }
 
